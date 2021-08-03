@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+<br/>
+<h1>{{ project.title_project }}</h1>
+<p>{{ project.description_project }}</p>
+<hr/>
+
+<!-- Columns with the state of todo -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <div class="alert alert-danger" role="alert">
+                <h2>Todo</h2>
+            </div>
+            {% for todo in project.todos.all %}
+                {% if todo.state_todo == 'Planning' %}
+                <div class="list-group">
+                    <a href="{% url 'todo_detail' todo.pk %}" class="list-group-item list-group-item-action">
+                        {{ todo.title_todo }}
+                    </a>
+                </div>
+                {% endif %}
+            {% endfor %}
+            <br/>
+        </div>
+
+        <div class="col-sm">
+            <div class="alert alert-primary" role="alert">
+                <h2>Running</h2>
+            </div>
+            {% for todo in project.todos.all %}
+                {% if todo.state_todo == 'Running' %}
+                <div class="list-group">
+                    <a href="{% url 'todo_detail' todo.pk %}" class="list-group-item list-group-item-action">
+                        {{ todo.title_todo }}
+                    </a>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        
+        <div class="col-sm">
+            <div class="alert alert-success" role="alert">
+                <h2>Finished</h2>
+            </div>
+            {% for todo in project.todos.all %}
+                {% if todo.state_todo == 'Finished' %}
+                <div class="list-group">
+                    <a href="{% url 'todo_detail' todo.pk %}" class="list-group-item list-group-item-action">
+                        {{ todo.title_todo }}
+                    </a>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        
+    </div>
+  </div>
+{% endblock content %}

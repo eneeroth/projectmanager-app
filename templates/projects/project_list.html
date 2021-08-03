@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+<h1>Dashboard</h1>
+<p>All your active projects.</p>
+<hr>
+
+{% for project in object_list %}
+    <h2>
+        <a href="{% url 'project_detail' project.pk %}">{{ project.title_project }}</a>
+    </h2>
+    <p>
+        {{ project.description_project }}
+    </p>
+    <br/>
+    <p>By: {{ project.creator_project }} | {{ project.date_created_project }}</p>
+
+    <hr>
+    <br/>
+    
+{% endfor %}
+
+{% endblock content %}
