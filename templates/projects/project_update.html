@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Update{% endblock title %}
+
+{% block content %}
+<br/>
+<h1>Create New Project</h1>
+
+<form method="post" action="">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <br/>
+    <button class="btn btn-primary" type="submit">Update Project</button>
+</form> 
+<br/>
+
+{% endblock content %}

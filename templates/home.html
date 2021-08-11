@@ -2,11 +2,14 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-        <h1>HI {{ user.first_name  }} {{ user.last_name  }} </h1>
-        <a href="{% url 'logout' %}">Logout</a>
-
-    {% else %}
-        <a href="{% url 'login' %}">Login</a> | <a href="{% url 'signup' %}">Signup</a>
-    {% endif %}
+<br/>
+<div class="jumbotron">
+    <h1 class="display-4">Welcome</h1>
+    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+    <hr class="my-4">
+    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+    <p class="lead">
+      <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+    </p>
+  </div>
 {% endblock content %}

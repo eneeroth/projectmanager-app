@@ -8,11 +8,36 @@
 <hr/>
 
 <!-- Columns with the state of todo -->
+            
 <div class="container">
+
+   
     <div class="row">
+            <!-- box right with links -->
+        <div class="col-sm order-last align-self-right">
+            
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a href="#" id="side-link" class="nav-link link-dark">+ Create ToDo</a>
+                    </li>   
+                    <li class="list-group-item">
+                        <a href="{% url 'project_update' project.pk %}" id="side-link" class="nav-link link-dark">~ Update Project</a>
+                    </li> 
+                    <li class="list-group-item">
+                        <a href="{% url 'project_delete' project.pk %}" id="side-link" class="nav-link link-danger">- Delete Project</a>
+                    </li> 
+                    
+            </ul>
+
+        </div>
+    </div>
+
+
+        <!-- ToDos -->
         <div class="col-sm">
             <div class="alert alert-danger" role="alert">
-                <h2>Todo</h2>
+                <h2>ToDo</h2>
             </div>
             {% for todo in project.todos.all %}
                 {% if todo.state_todo == 'Planning' %}
@@ -58,4 +83,5 @@
         
     </div>
   </div>
+  <br/>
 {% endblock content %}

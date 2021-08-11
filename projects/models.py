@@ -37,7 +37,7 @@ class Todo(models.Model):
         return self.title_todo
 
     def get_absolute_url(self):
-        return reverse('project_list')
+        return reverse('project_detail', args=[str(self.project.pk)])
 
 class Comments(models.Model):
     pass

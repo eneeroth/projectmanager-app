@@ -7,17 +7,22 @@
 <hr>
 
 {% for project in object_list %}
-    <h2>
-        <a href="{% url 'project_detail' project.pk %}">{{ project.title_project }}</a>
-    </h2>
-    <p>
-        {{ project.description_project }}
-    </p>
-    <br/>
-    <p>By: {{ project.creator_project }} | {{ project.date_created_project }}</p>
-
+    <div class="card">
+        <div class="card-header">
+            {{ project.date_created_project }} | {{ project.creator_project.first_name }} {{ project.creator_project.last_name }}
+        </div>
+        <div class="card-body">
+        <h5 class="card-title">{{ project.title_project }}</h5>
+        <div class="row">
+            <div class="col-3 text-truncate">
+                <p class="card-text">{{ project.description_project }}</p>
+            </div>
+        </div>
+        <br/>
+        <a href="{% url 'project_detail' project.pk %}" class="btn btn-primary">Detail View</a>
+        </div>
+    </div>
     <hr>
-    <br/>
     
 {% endfor %}
 
