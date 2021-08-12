@@ -1,4 +1,5 @@
 from django import forms
+
 from django.forms import ModelForm
 
 from .models import Todo, Project
@@ -16,6 +17,16 @@ from .models import Todo, Project
 #             'description_project': forms.Textarea(attrs={'cols': 5, 'rows': 5}),
 #         }
 
+class TodoCreateForm(ModelForm):
+    class Meta:
+        model = Todo
+        fields = ('title_todo', 'description_todo')
+
+        widgets = {
+            'title_todo': forms.TextInput(attrs={'cols': 5, 'rows': 1}),
+            'description_todo': forms.Textarea(attrs={'cols': 4, 'rows': 4})
+        }
+
 
 class TodoChangeStateForm(ModelForm):
     class Meta:
@@ -25,3 +36,6 @@ class TodoChangeStateForm(ModelForm):
         widgets = {
             'description_todo': forms.Textarea(attrs={'cols': 5, 'rows': 5})
         }
+
+
+

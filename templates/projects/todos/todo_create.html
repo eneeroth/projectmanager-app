@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Create Todo{% endblock title %}
+
+{% block content %}
+<br/>
+<center>
+{% for data in project %}
+<h1>Create New Todo for "{{ data.title_project }}"</h1>
+{% endfor %}
+<hr>
+<br/>
+</center>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.title_todo|as_crispy_field }}
+        {{ form.description_todo|as_crispy_field }}
+        <br/>
+        <button class="btn btn-primary" type="submit">Save</button>
+    </form>
+    
+
+
+{% endblock content %}

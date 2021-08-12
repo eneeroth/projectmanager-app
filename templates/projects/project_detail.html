@@ -19,7 +19,7 @@
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        <a href="#" id="side-link" class="nav-link link-dark">+ Create ToDo</a>
+                        <a href="{% url 'todo_create' project.pk %}" id="side-link" class="nav-link link-dark">+ Create ToDo</a>
                     </li>   
                     <li class="list-group-item">
                         <a href="{% url 'project_update' project.pk %}" id="side-link" class="nav-link link-dark">~ Update Project</a>
