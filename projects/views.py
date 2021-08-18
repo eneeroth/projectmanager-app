@@ -1,66 +1,109 @@
 
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from .models import Project, Todo
-from .forms import TodoChangeStateForm, TodoCreateForm
+from .forms import TodoUpdateForm, TodoCreateForm, ProjectAddMemberForm, ProjectCreateForm
 
 
 ##### Projects #######
 
-class ProjectListView(ListView):
+class ProjectListView(LoginRequiredMixin, ListView):
     """ 
-    todo....
-    User shall only be able to list 
-    projects that they are member of
+
     """
 
     model = Project
     template_name = 'projects/project_list.html'
 
+    # Filter the query to projects user are a member of or admin
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).filter(admin=self.request.user) | super().get_queryset(*args, **kwargs).filter(members=self.request.user) 
 
-class ProjectDetailView(DetailView):
+
+class ProjectDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     """ 
-    todo...
-    User shall only be able to detailView 
-    projects that they are member of
+    todo
+    User shall only be able to detailView projects that they are member of
     """
     model = Project
     template_name = 'projects/project_detail.html'
 
+    # Check to see if member or admin of a project else 403
+    def test_func(self):
+        obj = self.get_object()
+        if self.request.user in obj.members.all() or self.request.user in obj.admin.all() or self.request.user == obj.creator_project:
+            return True
+        else:
+            return False
 
-class ProjectCreateView(CreateView):
+
+class ProjectCreateView(LoginRequiredMixin, CreateView):
     """ 
-    todo...
-    The creator shall be automatic set to the user 
-    Only authenticated user shall be able to create a project
+    The creator shall be automatic set to the user with form_valid
+    Only authenticated are able to create project with loginRequiredMixin
     """
     model = Project
     template_name = 'projects/project_create.html'
-    fields = ('__all__')
+    form_class = ProjectCreateForm
+
+    def form_valid(self, form):
+        form.instance.creator_project = self.request.user
+        return super().form_valid(form)
 
 
-class ProjectDeleteView(DeleteView):
+class ProjectDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Project
     template_name = 'projects/project_delete.html'
     success_url = reverse_lazy('project_list')
 
+    # Check to see if creator or admin of a project else 403
+    def test_func(self):
+        obj = self.get_object()
+        if self.request.user == obj.creator_project or self.request.user in obj.admin.all():
+            return True
+        else:
+            return False
 
-class ProjectUpdateView(UpdateView):
+
+class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Project
     template_name = 'projects/project_update.html'
     fields = ('title_project', 'description_project')
 
+    # Check to see if creator or admin of a project else 403
+    def test_func(self):
+        obj = self.get_object()
+        if self.request.user == obj.creator_project or self.request.user in obj.admin.all():
+            return True
+        else:
+            return False
+
+
+class ProjectAddMemberView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Project
+    form_class = ProjectAddMemberForm
+    template_name = 'projects/project_add_member.html'
+
+    # Check to see if creator or admin of a project else 403
+    def test_func(self):
+        obj = self.get_object()
+        if self.request.user == obj.creator_project or self.request.user in obj.admin.all():
+            return True
+        else:
+            return False
+
 
 ###### Todos #######
 
-class TodoDetailView(DetailView):
+class TodoDetailView(LoginRequiredMixin, DetailView):
     model = Todo
     template_name = 'projects/todos/todo_detail.html'
 
 
-class TodoCreateView(CreateView):
+class TodoCreateView(LoginRequiredMixin, CreateView):
     model = Todo
     form_class = TodoCreateForm
     template_name = 'projects/todos/todo_create.html'
@@ -78,18 +121,39 @@ class TodoCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(TodoCreateView, self).get_context_data(**kwargs)
         context['project'] = Project.objects.filter(pk=self.kwargs.get('pk'))
+
         return context
 
 
-class TodoDeleteView(DeleteView):
-    pass
-
-
-class TodoUpdateView(UpdateView):
-    """
-    
-    """
+class TodoDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Todo
-    form_class = TodoChangeStateForm
+    template_name = 'projects/todos/todo_delete.html'
+
+    # Get the todo.project.pk to reverse_lazy on successfully deletion
+    def get_success_url(self):
+        project = self.object.project
+
+        return reverse_lazy('project_detail', kwargs={'pk': project.pk})
+
+    # Check to see if creator or admin of a project else 403
+    def test_func(self):
+        obj = self.get_object()
+        if self.request.user == obj.project.creator_project or self.request.user in obj.project.admin.all():
+            return True
+        else:
+            return False
+
+
+
+class TodoUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Todo
+    form_class = TodoUpdateForm
     template_name = 'projects/todos/todo_update.html'
 
+    # Check to see if creator or admin of a project else 403
+    def test_func(self):
+        obj = self.get_object()
+        if self.request.user == obj.project.creator_project or self.request.user in obj.project.admin.all():
+            return True
+        else:
+            return False

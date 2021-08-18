@@ -6,22 +6,28 @@
 <p>All your active projects.</p>
 <hr>
 
-{% for project in object_list %}
-    <div class="card">
-        <div class="card-header">
-            {{ project.date_created_project }} | {{ project.creator_project.first_name }} {{ project.creator_project.last_name }}
-        </div>
-        <div class="card-body">
-        <h5 class="card-title">{{ project.title_project }}</h5>
-        <div class="row">
-            <div class="col-3 text-truncate">
-                <p class="card-text">{{ project.description_project }}</p>
+{% for project in object_list %}  
+        <div class="card">
+            <div class="card-header">
+                {{ project.date_created_project }} | {{ project.creator_project.first_name }} {{ project.creator_project.last_name }}
+                {% if user in project.members.all and user in project.admin.all %} | <strong>Admin, Member</strong>{% elif user in project.members.all %} | <strong>Member</strong>
+                {% elif user in project.admin.all %} | <strong>Admin</strong>{% endif %}
+            </div>
+            <div class="card-body">
+            <h5 class="card-title">{{ project.title_project }}</h5>
+            <div class="row">
+                <div class="col-3 text-truncate">
+                    <p class="card-text">{{ project.description_project }}</p>
+                </div>
+            </div>
+            <br/>
+            <a href="{% url 'project_detail' project.pk %}" class="btn btn-primary">Detail View</a>
             </div>
         </div>
         <br/>
-        <a href="{% url 'project_detail' project.pk %}" class="btn btn-primary">Detail View</a>
-        </div>
-    </div>
+        {% empty %}
+            <p>No active projects.</p>
+            <a href="{% url 'project_create' %}" class="btn btn-primary">Create a Project Here</a>
     <hr>
     
 {% endfor %}

@@ -1,21 +1,42 @@
 from django import forms
 
 from django.forms import ModelForm
+from django.forms.widgets import Select
 
 from .models import Todo, Project
 
 
-# class ProjectCreateForm(ModelForm):
-#     class Meta:
-#         model = Project
-#         fields = ('')
+class ProjectCreateForm(ModelForm):
+    class Meta:
+        model = Project
+        fields = ('title_project', 'description_project', 'admin', 'members',)
 
-#         widgets = {
-#             'title_project': forms.CharField(attrs={'cols': 10, 'rows': 5}),
-#             'description_project': forms.Textarea(attrs={'cols': 5, 'rows': 5}),
-#             'description_project': forms.Textarea(attrs={'cols': 5, 'rows': 5}),
-#             'description_project': forms.Textarea(attrs={'cols': 5, 'rows': 5}),
-#         }
+        widgets = {
+            'admin': forms.SelectMultiple(),
+            'members': forms.SelectMultiple(),
+            }
+        
+        help_texts = {
+            'admin': 'To select multiple press "Ctrl"',
+            'members': 'To select multiple press "Ctrl"'
+        }
+
+        
+
+
+class ProjectAddMemberForm(ModelForm):
+    class Meta:
+        model = Project
+        fields = ('members',)
+
+        widgets = {
+            'members': forms.CheckboxSelectMultiple(),
+            }
+
+        labels = {
+            'members': '',
+            }
+
 
 class TodoCreateForm(ModelForm):
     class Meta:
@@ -28,7 +49,7 @@ class TodoCreateForm(ModelForm):
         }
 
 
-class TodoChangeStateForm(ModelForm):
+class TodoUpdateForm(ModelForm):
     class Meta:
         model = Todo
         fields = ('state_todo', 'title_todo', 'description_todo',)

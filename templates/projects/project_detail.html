@@ -5,6 +5,7 @@
 <br/>
 <h1>{{ project.title_project }}</h1>
 <p>{{ project.description_project }}</p>
+<p><strong>Created by:</strong> {{ project.creator_project }} <strong>|</strong> {{ project.date_created_project }}</p>
 <hr/>
 
 <!-- Columns with the state of todo -->
@@ -18,6 +19,17 @@
             
             <div class="card-body">
                 <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                    <a class="nav-link link-dark" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">~ Members</a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                        {% for member in project.members.all %}
+                            <li><a class="dropdown-item" href="#">{{ member }}</a></li>
+                        {% endfor %}    
+                    </ul>
+                    </li> 
+                    <li class="list-group-item">
+                        <a href="{% url 'project_add_member' project.pk %}" id="side-link" class="nav-link link-dark">+ Add Member</a>
+                    </li> 
                     <li class="list-group-item">
                         <a href="{% url 'todo_create' project.pk %}" id="side-link" class="nav-link link-dark">+ Create ToDo</a>
                     </li>   
@@ -82,6 +94,7 @@
         </div>
         
     </div>
+    <hr>
   </div>
   <br/>
 {% endblock content %}
