@@ -1,5 +1,5 @@
 
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -98,12 +98,23 @@ class ProjectAddMemberView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 ###### Todos #######
 
-class TodoDetailView(LoginRequiredMixin, DetailView):
+class TodoDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Todo
-    template_name = 'projects/todos/todo_detail.html'
+    template_name = 'projects/todos/todo_detail.html'   
+
+    # Check to see if creator, admin or member of a project else 403
+    def test_func(self):
+        obj = self.get_object()
+        if self.request.user == obj.project.creator_project or self.request.user in obj.project.admin.all() or self.request.user in obj.project.members.all():
+            return True
+        else:
+            return False
 
 
 class TodoCreateView(LoginRequiredMixin, CreateView):
+    """
+    PROBLEM: User can create todo on every project by using the URL
+    """
     model = Todo
     form_class = TodoCreateForm
     template_name = 'projects/todos/todo_create.html'
@@ -117,10 +128,13 @@ class TodoCreateView(LoginRequiredMixin, CreateView):
 
     # Get queryset for the project to display information in the template
     # get a context by calling the super() and then get the data with **kwargs
-    # then store the data in a list context['project'] and filter the model based on pk 
+    # Filter by pk and run get_object_or_404
+    # then store the data in a dict context['project']
     def get_context_data(self, **kwargs):
         context = super(TodoCreateView, self).get_context_data(**kwargs)
-        context['project'] = Project.objects.filter(pk=self.kwargs.get('pk'))
+        project = Project.objects.filter(pk=self.kwargs.get('pk'))
+        get_object_or_404(project)
+        context['project'] = project
 
         return context
 
@@ -150,10 +164,10 @@ class TodoUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     form_class = TodoUpdateForm
     template_name = 'projects/todos/todo_update.html'
 
-    # Check to see if creator or admin of a project else 403
+    # Check to see if creator or member of project else 403
     def test_func(self):
         obj = self.get_object()
-        if self.request.user == obj.project.creator_project or self.request.user in obj.project.admin.all():
+        if self.request.user == obj.project.creator_project or self.request.user in obj.project.members.all():
             return True
         else:
             return False

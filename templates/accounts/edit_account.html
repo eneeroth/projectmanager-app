@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Edit Account{% endblock title %}
+
+{% block content %}
+<br>
+
+  <center>
+      <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="row">
+          <div class="col">
+            {{form.username|as_crispy_field}}
+          </div>
+          <div class="col">
+            {{form.email|as_crispy_field}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {{form.first_name|as_crispy_field}}
+          </div>
+          <div class="col">
+            {{form.last_name|as_crispy_field}}
+          </div>
+          {{form.profile_pic|as_crispy_field}}
+          {{form.bio_text|as_crispy_field}}
+          {{form.facebook_url|as_crispy_field}}
+          {{form.twitter_url|as_crispy_field}}
+          {{form.instagram_url|as_crispy_field}}
+          {{form.website_url|as_crispy_field}}
+        </div>
+        <center>
+          <button type="submit" class="btn btn-primary m-3">Save</button>
+        </center>
+      </form>
+    </div>
+</center>
+<br />
+{% endblock content %}

@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic.base import TemplateView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,4 +24,4 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')), # Our sign-up view
     path('accounts/', include('django.contrib.auth.urls')), # The buit-in authentication app, wich provides with login/out views
     path('', include('pages.urls')), #Temporär
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

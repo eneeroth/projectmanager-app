@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Account{% endblock title %}
+
+{% block content %}
+<br>
+
+
+<div class="container">
+  <center>
+    <div class="card" style="width: 25rem;">
+    {% if requested_profile.profile_pic %}
+      <img src="{{ requested_profile.profile_pic.url }}" class="card-img-top" alt="Profile Pic" width="200"
+        height="350">
+    {% else %}
+      <img src="{% static 'images/blank_profile.png' %}" class="card-img-top" alt="Profile Pic" width="200"
+        height="350">
+    {% endif %}
+      <div class="card-body">
+        <h4 class="card-title">{{ requested_profile.first_name }} {{ requested_profile.last_name }}</h4>
+        <img src="{% static 'images/envelope.svg' %}" width="25" height="25" alt="email"> {{ requested_profile.email }}
+        {% comment %} <img src="{% static 'images/people.svg' %}" width="25" height="25" alt="email">
+        {{ requested_profile.active_projects }} {% endcomment %}
+        <hr>
+        <h6>About Me</h6>
+        <p>{{ requested_profile.bio_text }}</p>
+
+
+
+        <a href="{{ requested_profile.facebook_url }}" class="" target="_blank" rel="noopener noreferrer"> <img
+            src="{% static 'images/facebook.svg' %}" width="25" height="25" alt="facebook"></a>
+        <a href="{{ requested_profile.twitter_url }}" class="" target="_blank" rel="noopener noreferrer"> <img
+            src="{% static 'images/twitter.svg' %}" width="25" height="25" alt="twitter"></a>
+        <a href="{{ requested_profile.instagram_url }}" class="" target="_blank" rel="noopener noreferrer"> <img
+            src="{% static 'images/instagram.svg' %}" width="25" height="25" alt="instagram"></a>
+        <a href="{{ requested_profile.website_url }}" class="" target="_blank" rel="noopener noreferrer"> <img
+            src="{% static 'images/link.svg' %}" width="25" height="25" alt="website"></a>
+
+      </div>
+    </div>
+  </center>
+</div>
+<br />
+{% endblock content %}

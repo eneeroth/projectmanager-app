@@ -23,7 +23,7 @@
                     <a class="nav-link link-dark" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">~ Members</a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                         {% for member in project.members.all %}
-                            <li><a class="dropdown-item" href="#">{{ member }}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'profile_page' member.pk %}">{{ member }}</a></li>
                         {% endfor %}    
                     </ul>
                     </li> 
