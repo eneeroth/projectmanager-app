@@ -4,7 +4,7 @@
 
 {% block content %}
     <div style="width: 450px;  margin: 0 auto; padding: 10px;">
-        <form method="post">
+        <form method="post" class="fw-bold">
             {% csrf_token %}
             {{ form|crispy }}
             <br/>

@@ -24,7 +24,7 @@ class UserChangeForm(ModelForm):
 
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control mb-3',}),
-            'profile_pic': forms.FileInput(attrs={'class': 'form-control mb-3',}),
+            # 'profile_pic': forms.FileInput(attrs={'class': 'form-control mb-3',}),
             'bio_text': forms.Textarea(attrs={'class': 'form-control mb-3',}),
             'first_name': forms.TextInput(attrs={'class': 'form-control mb-3',}),
             'last_name': forms.TextInput(attrs={'class': 'form-control mb-3',}),

@@ -37,21 +37,21 @@
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
           </li>
-          <li class="nav-item">
+          {% comment %} <li class="nav-item">
             <a class="nav-link" href="#">link</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">link</a>
-          </li>
+          </li> {% endcomment %}
         </ul>
         <ul class="navbar-nav ms-auto mb-auto mb-lg-auto">
           <form class="d-inline-flex p-2">
-            <button class="btn btn-sm btn-outline-primary" type="button"><a class="nav-link"
+            <button class="btn btn-sm btn-outline-dark" type="button"><a class="nav-link"
                 href="{% url 'login' %}">Log In</a></button>
           </form>
 
           <form class="d-inline-flex p-2">
-            <button class="btn btn-sm btn-outline-secondary" type="button"><a class="nav-link"
+            <button class="btn btn-sm btn-dark" type="button"><a class="nav-link"
                 href="{% url 'signup' %}">Sign Up</a></button>
           </form>
         </ul>
@@ -73,7 +73,7 @@
                   <a class="nav-link" href="{% url 'project_list' %}">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'project_create' %}">Create New</a>
+                  <a class="nav-link" href="{% url 'project_create' %}">Create New +</a>
                 </li>
               </ul>
             </div>
@@ -104,6 +104,13 @@
 
     </main>
   </div>
+
+  <hr/>
+  <footer>
+    <center>
+    <p>Created by: Daniel Eneroth<a href="mailto:danieleneroth@gmail.com"><img class="m-1" src="{% static 'images/envelope.svg'%}" alt="mail" width="20" height="20"></a></p>
+    </center>
+  </footer>
 
 
   <!-- Optional JavaScript; choose one of the two! -->

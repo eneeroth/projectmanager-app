@@ -1,15 +1,30 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-<br/>
+<br />
 <div class="jumbotron">
-    <h1 class="display-4">Welcome</h1>
-    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-    <hr class="my-4">
-    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-    <p class="lead">
-      <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-    </p>
-  </div>
+  <h1 class="display-4">Welcome</h1>
+  <p class="lead">A simple Project Manager that lets you create a project and manage tasks togheter with your co-workers
+  </p>
+  <hr class="my-4">
+  <p class="lead">See all active projects with the dashboard.
+    <img src="{% static 'images/list_projects.png' %}" alt="List-Project" class="img-fluid border border-dark rounded">
+  </p>
+  <hr />
+  <p class="lead">Plan, control and manage tasks inside the detail-manager.
+    <img src="{% static 'images/detail_project.png' %}" alt="detail-Project"
+      class="img-fluid border border-dark rounded">
+  </p>
+  <hr />
+  {% comment %} <p class="lead">Plan, control and manage tasks inside the detail-manager.
+    <img src="{% static 'images/detail_project.png' %}" alt="detail-Project"
+      class="img-fluid border border-dark rounded">
+  </p>
+  <hr /> {% endcomment %}
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="{% url 'signup' %}" role="button">Get started here!</a>
+  </p>
+</div>
 {% endblock content %}

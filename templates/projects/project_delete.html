@@ -7,7 +7,7 @@
 <br/>
 <h1>Are you sure you want to delete "{{ project.title_project }}"?</h1>
 
-<form action="" method="post">
+<form action="" method="post" class="fw-bold">
     {% csrf_token %}
     {{ form|crispy }}
     <br/>
