@@ -5,8 +5,12 @@
 
 {% block content %}
 <br>
-
+<div class="fw-bold">
+<a href="{% url 'password_change' %}">Change Password</a>
+</div>
+<br>
   <center>
+      
       <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 

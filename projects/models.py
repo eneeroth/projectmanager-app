@@ -15,8 +15,8 @@ class Project(models.Model):
     description_project = models.TextField()
     creator_project = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     date_created_project = models.DateTimeField(auto_now_add=True)
-    members = models.ManyToManyField(get_user_model(), related_name='members', null=False, blank=False)
-    admin = models.ManyToManyField(get_user_model(), related_name='admin', null=False, blank=False)
+    members = models.ManyToManyField(get_user_model(), related_name='members')
+    admin = models.ManyToManyField(get_user_model(), related_name='admin')
     #active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -45,7 +45,29 @@ class Todo(models.Model):
         return reverse('project_detail', args=[str(self.project.pk)])
 
 
-class Comments(models.Model):
-    pass
+class CommentProject(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='comment_project')
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    title = models.CharField(max_length=50)
+    body = models.TextField(blank=False, null=False)
+    date = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.body
+
+    def get_absolute_url(self):
+        return reverse('project_detail', args=[str(self.project.pk)])
 
 
+class CommentTodo(models.Model):
+    todo = models.ForeignKey(Todo, on_delete=models.CASCADE, related_name='comment_todo')
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    title = models.CharField(max_length=50)
+    body = models.TextField(blank=False, null=False)
+    date = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.body
+
+    def get_absolute_url(self):
+        return reverse('todo_detail', args=[str(self.todo.pk)])

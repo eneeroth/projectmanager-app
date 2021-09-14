@@ -16,4 +16,8 @@ urlpatterns = [
     path('todo/<int:pk>/detail/', TodoDetailView.as_view(), name='todo_detail'),
     path('todo/<int:pk>/update/', TodoUpdateView.as_view(), name='todo_update'),
     path('todo/<int:pk>/delete/', TodoDeleteView.as_view(), name='todo_delete'),
+    #Comments
+    path('<int:pk>/comment/', CommentProjectView.as_view(), name='comment_project'),
+    path('comment/<int:pk>/edit/', CommentProjectEditView.as_view(), name='comment_project_edit'),
+    path('comment/<int:pk>/delete/', CommentProjectDeleteView.as_view(), name='comment_project_delete'),
 ]

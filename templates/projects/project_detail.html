@@ -2,48 +2,57 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-<br/>
+<br />
 <h1>{{ project.title_project }}</h1>
 <p>{{ project.description_project }}</p>
 <p><strong>Created by:</strong> {{ project.creator_project }} <strong>|</strong> {{ project.date_created_project }}</p>
-<hr/>
+<hr />
 
 <!-- Columns with the state of todo -->
-            
+
 <div class="container">
 
-   
+
     <div class="row">
-            <!-- box right with links -->
+        <!-- box right with links -->
         <div class="col-sm order-last align-self-right">
-            
+
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                    <a class="nav-link link-dark" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">~ Members</a>
-                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                        {% for member in project.members.all %}
+                        <a class="nav-link link-dark" href="#" id="navbarDarkDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">~ Members</a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                            {% for member in project.members.all %}
                             <li><a class="dropdown-item" href="{% url 'profile_page' member.pk %}">{{ member }}</a></li>
-                        {% endfor %}    
-                    </ul>
-                    </li> 
+                            {% endfor %}
+                        </ul>
+                    </li>
                     <li class="list-group-item">
-                        <a href="{% url 'project_add_member' project.pk %}" id="side-link" class="nav-link link-dark">+ Add Member</a>
-                    </li> 
+                        <a href="{% url 'project_add_member' project.pk %}" id="side-link" class="nav-link link-dark">+
+                            Add Member</a>
+                    </li>
                     <li class="list-group-item">
-                        <a href="{% url 'todo_create' project.pk %}" id="side-link" class="nav-link link-dark">+ Create ToDo</a>
-                    </li>   
+                        <a href="{% url 'comment_project' project.pk %}" id="side-link" class="nav-link link-dark">+
+                            Add Comment</a>
+                    </li>
                     <li class="list-group-item">
-                        <a href="{% url 'project_update' project.pk %}" id="side-link" class="nav-link link-dark">~ Update Project</a>
-                    </li> 
+                        <a href="{% url 'todo_create' project.pk %}" id="side-link" class="nav-link link-dark">+ Create
+                            ToDo</a>
+                    </li>
                     <li class="list-group-item">
-                        <a href="{% url 'project_delete' project.pk %}" id="side-link" class="nav-link link-danger">- Delete Project</a>
-                    </li> 
-                    
-            </ul>
+                        <a href="{% url 'project_update' project.pk %}" id="side-link" class="nav-link link-dark">~
+                            Update Project</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{% url 'project_delete' project.pk %}" id="side-link" class="nav-link link-danger">-
+                            Delete Project</a>
+                    </li>
 
+                </ul>
+
+            </div>
         </div>
-    </div>
 
 
         <!-- ToDos -->
@@ -52,15 +61,15 @@
                 <h2>ToDo</h2>
             </div>
             {% for todo in project.todos.all %}
-                {% if todo.state_todo == 'Planning' %}
-                <div class="list-group">
-                    <a href="{% url 'todo_detail' todo.pk %}" class="list-group-item list-group-item-action">
-                        {{ todo.title_todo }}
-                    </a>
-                </div>
-                {% endif %}
+            {% if todo.state_todo == 'Planning' %}
+            <div class="list-group">
+                <a href="{% url 'todo_detail' todo.pk %}" class="list-group-item list-group-item-action">
+                    {{ todo.title_todo }}
+                </a>
+            </div>
+            {% endif %}
             {% endfor %}
-            <br/>
+            <br />
         </div>
 
         <div class="col-sm">
@@ -68,33 +77,47 @@
                 <h2>Running</h2>
             </div>
             {% for todo in project.todos.all %}
-                {% if todo.state_todo == 'Running' %}
-                <div class="list-group">
-                    <a href="{% url 'todo_detail' todo.pk %}" class="list-group-item list-group-item-action">
-                        {{ todo.title_todo }}
-                    </a>
-                </div>
-                {% endif %}
+            {% if todo.state_todo == 'Running' %}
+            <div class="list-group">
+                <a href="{% url 'todo_detail' todo.pk %}" class="list-group-item list-group-item-action">
+                    {{ todo.title_todo }}
+                </a>
+            </div>
+            {% endif %}
             {% endfor %}
+            <br />
         </div>
-        
+
         <div class="col-sm">
             <div class="alert alert-success" role="alert">
                 <h2>Finished</h2>
             </div>
             {% for todo in project.todos.all %}
-                {% if todo.state_todo == 'Finished' %}
-                <div class="list-group">
-                    <a href="{% url 'todo_detail' todo.pk %}" class="list-group-item list-group-item-action">
-                        {{ todo.title_todo }}
-                    </a>
-                </div>
-                {% endif %}
+            {% if todo.state_todo == 'Finished' %}
+            <div class="list-group">
+                <a href="{% url 'todo_detail' todo.pk %}" class="list-group-item list-group-item-action">
+                    {{ todo.title_todo }}
+                </a>
+            </div>
+            {% endif %}
             {% endfor %}
+            <br />
         </div>
-        
+
     </div>
     <hr>
-  </div>
-  <br/>
+
+    {% for comment in comments.all %}
+    <div class="card w-50">
+        <div class="card-body">
+            <h5 class="card-title">{{comment.title}}</h5>
+            <p class="card-text">{{comment.body}}</p>
+            <p>By: {{comment.author}} | {{comment.date}}</p>
+            <p><a href="{% url 'comment_project_edit' comment.pk  %}">edit</a> | <a href="{% url 'comment_project_delete' comment.pk %}">delete</a></p>
+        </div>
+    </div>
+    <br />
+    {% endfor %}
+
+</div>
 {% endblock content %}

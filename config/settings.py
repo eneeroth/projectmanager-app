@@ -144,3 +144,12 @@ LOGOUT_REDIRECT_URL = 'home'
 
 #CRISPY_FORMS bootstrap 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+#Password reset
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = 'danieleneroth@gmail.com'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
