@@ -23,5 +23,5 @@ urlpatterns = [
     path('projects/', include('projects.urls')),
     path('accounts/', include('accounts.urls')), # Our sign-up view
     path('accounts/', include('django.contrib.auth.urls')), # The buit-in authentication app, wich provides with login/out views
-    path('home/', include('pages.urls')), #Temporär
+    path('', include('pages.urls')), #Temporär
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
