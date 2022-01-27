@@ -1,0 +1,6 @@
+Feedback från folk som provat sidan
+
+- Användare kan ta bort sig själv från projekt
+- Tab har home istället för dashboard (x)
+- Kanske byt ut bilden "om mig" som visar exempeltext
+- Snygga till "home" 
