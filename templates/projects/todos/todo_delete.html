@@ -4,16 +4,28 @@
 {% block title %}Delete ToDo{% endblock title %}
 
 {% block content %}
-<br/>
-<h1>Are you sure you want to delete "{{ todo.title_todo }}"?</h1>
+<section>
+    <div class="container text-center">
+        <h1 class="mt-2">Are you sure you want to delete "{{ todo.title_todo }}"?</h1>
+    </div>
+</section>
 
-<form action="" method="post" class="fw-bold">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <br/>
-    <button class="btn btn-primary" type="submit">Delete ToDo</button>
-    <a href="{% url 'project_detail' todo.project.pk %}" class="btn btn-secondary" role="button">Back To Project</a>
-</form>
+<section>
+    <div class="container">
+        <center>
+        <form action="" method="post" class="fw-bold">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <br/>
+            <button class="btn btn-danger" type="submit">Delete ToDo</button>
+            <a href="{% url 'project_detail' todo.project.pk %}" class="btn btn-secondary" role="button">Back To Project</a>
+        </form>
+    </center>
+    </div>
+</section>
+
+
+
     
 
 {% endblock content %}

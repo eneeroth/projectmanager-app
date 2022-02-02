@@ -3,33 +3,150 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-<br />
-<div class="jumbotron">
-  <h1 class="display-4">Welcome</h1>
-  <p class="lead">A simple Project Manager that lets you create a project and manage tasks togheter with your co-workers
-  </p>
-  <p class="lead">Login with username "testuser" and password "t3stus3r123" to try the app
-  </p>
-  <p class="lead">This is my first app so feel free to give feedback and check my GitHub page  <a href="mailto:danieleneroth@gmail.com" ><img class="m-1" src="{% static 'images/envelope.svg'%}" alt="mail" width="20" height="20"></a><a href="https://github.com/eneeroth" target="_blank" rel="noopener noreferrer"><img class="m-1" src="{% static 'images/github.svg'%}" alt="Github" width="20" height="20"></a>
-    <a href="https://www.linkedin.com/in/daniel-eneroth-954a72225/" target="_blank" rel="noopener noreferrer"><img class="m-1" src="{% static 'images/linkedin.svg'%}" alt="LinkedIn" width="20" height="20"></a>
-  </p>
-  <hr class="my-4">
-  <p class="lead">See all active projects with the dashboard.
-    <img src="{% static 'images/list_projects.PNG' %}" alt="List-Project" class="img-fluid border border-dark rounded">
-  </p>
-  <hr />
-  <p class="lead">Plan, control and manage tasks inside the detail-manager.
-    <img src="{% static 'images/detail_project.PNG' %}" alt="detail-Project"
-      class="img-fluid border border-dark rounded">
-  </p>
-  <hr />
-  <p class="lead">Create a personal profile page.
-    <img src="{% static 'images/profile.PNG' %}" alt="profile-page"
-      class="img-fluid border border-dark rounded">
-  </p>
-  <hr /> 
-  <p class="lead">
-    <a class="btn btn-primary btn-lg" href="{% url 'signup' %}" role="button">Get started here!</a>
-  </p>
-</div>
+<!-- Showcase -->
+<section class="bg-dark text-light p-4 text-center ">
+  <div class="container">
+    <div class="d-sm-flex align-items-center justify-content-center">
+      <div class="">
+        <h1>A Simple Site To Handle <span class="text-warning">Your Project!</span></h1>
+        <p class="lead">
+          Take control over your project and manage tasks togheter with your co-workers.
+        </p>
+        {% if user.is_authenticated %}
+        <a href="{% url 'project_create' %}"><button class="btn btn-secondary mb-4" type="button">Start a New Project
+            +</button>
+        </a>
+        {% else %}
+        <a href="{% url 'signup' %}"><button class="btn btn-secondary mb-4" type="button">Sign Up Now</button>
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Second showcase -->
+<section class="bg-secondary text-light p-4 text-center ">
+  <div class="container">
+    <div class="d-sm-flex align-items-center justify-content-center">
+      <div class="">
+        {% if user.is_authenticated %}
+        <h3>Have Fun!</h1>
+          <p class="lead">This is my first app so feel free to give feedback and check my GitHub page <a
+              href="mailto:danieleneroth@gmail.com"><img class="m-1" src="{% static 'images/envelope.svg'%}" alt="mail"
+                width="20" height="20"></a><a href="https://github.com/eneeroth" target="_blank"
+              rel="noopener noreferrer"><img class="m-1" src="{% static 'images/github.svg'%}" alt="Github" width="20"
+                height="20"></a><a href="https://www.linkedin.com/in/daniel-eneroth-954a72225/" target="_blank"
+              rel="noopener noreferrer"><img class="m-1" src="{% static 'images/linkedin.svg'%}" alt="LinkedIn"
+                width="20" height="20"></a>
+          </p>
+          {% else %}
+          <h3>Try It Out</h1>
+            <p class="lead">
+              Login with username <em>testuser</em> and password <em>t3stus3r123</em> to test the app out!
+            </p>
+            <p class="lead">This is my first app so feel free to give feedback and check my GitHub page <a
+                href="mailto:danieleneroth@gmail.com"><img class="m-1" src="{% static 'images/envelope.svg'%}"
+                  alt="mail" width="20" height="20"></a><a href="https://github.com/eneeroth" target="_blank"
+                rel="noopener noreferrer"><img class="m-1" src="{% static 'images/github.svg'%}" alt="Github" width="20"
+                  height="20"></a><a href="https://www.linkedin.com/in/daniel-eneroth-954a72225/" target="_blank"
+                rel="noopener noreferrer"><img class="m-1" src="{% static 'images/linkedin.svg'%}" alt="LinkedIn"
+                  width="20" height="20"></a>
+            </p>
+            <a href="{% url 'login' %}"><button class="btn btn-dark mb-4" type="button">Login Here</button>
+            </a>
+            {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Carousel -->
+<section>
+  <div class="container">
+    <div id="carouselExampleDark" class="carousel carousel-dark slide m-5" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
+          aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="10000">
+          <div class="border border-dark border-3 rounded">
+            <img src="{% static 'images/project_dashboard.PNG' %}" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Active Projects</h5>
+              <p>A simple overview of your active projects.</p>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item" data-bs-interval="10000">
+          <div class="border border-dark border-3 rounded">
+            <img src="{% static 'images/project_detail.PNG' %}" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Detail Overview</h5>
+              <p>Manage ToDos, members, comments and more in detail view.</p>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="border border-dark border-3 rounded">
+          <img src="{% static 'images/project_profile.PNG' %}" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <h5><span class="text-warning bg-secondary"><strong>Profile Pages</strong></span></h5>
+            <p><span class="text-warning bg-secondary">Create a personal profile page.</span></p>
+          </div>
+        </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+
+{% comment %} <div class="container">
+  <div class="jumbotron">
+    <h1 class="display-4">Welcome</h1>
+    <p class="lead">A simple Project Manager that lets you create a project and manage tasks togheter with your
+      co-workers
+    </p>
+    <p class="lead">Login with username "testuser" and password "t3stus3r123" to try the app
+    </p>
+    <p class="lead">This is my first app so feel free to give feedback and check my GitHub page <a
+        href="mailto:danieleneroth@gmail.com"><img class="m-1" src="{% static 'images/envelope.svg'%}" alt="mail"
+          width="20" height="20"></a><a href="https://github.com/eneeroth" target="_blank"
+        rel="noopener noreferrer"><img class="m-1" src="{% static 'images/github.svg'%}" alt="Github" width="20"
+          height="20"></a>
+      <a href="https://www.linkedin.com/in/daniel-eneroth-954a72225/" target="_blank" rel="noopener noreferrer"><img
+          class="m-1" src="{% static 'images/linkedin.svg'%}" alt="LinkedIn" width="20" height="20"></a>
+    </p>
+    <hr class="my-4">
+    <p class="lead">See all active projects with the dashboard.
+      <img src="{% static 'images/list_projects.PNG' %}" alt="List-Project"
+        class="img-fluid border border-dark rounded">
+    </p>
+    <hr />
+    <p class="lead">Plan, control and manage tasks inside the detail-manager.
+      <img src="{% static 'images/detail_project.PNG' %}" alt="detail-Project"
+        class="img-fluid border border-dark rounded">
+    </p>
+    <hr />
+    <p class="lead">Create a personal profile page.
+      <img src="{% static 'images/profile.PNG' %}" alt="profile-page" class="img-fluid border border-dark rounded">
+    </p>
+    <hr />
+    <p class="lead">
+      <a class="btn btn-primary btn-lg" href="{% url 'signup' %}" role="button">Get started here!</a>
+    </p>
+  </div>
+</div> {% endcomment %}
 {% endblock content %}

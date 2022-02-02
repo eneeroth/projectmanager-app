@@ -3,22 +3,24 @@
 {% block title %}Create Todo{% endblock title %}
 
 {% block content %}
-<br/>
-<center>
-{% for data in project %}
-<h1>Create New Todo for "{{ data.title_project }}"</h1>
-{% endfor %}
-<hr>
-<br/>
-</center>
-    <form action="" method="post" class="fw-bold">
-        {% csrf_token %}
-        {{ form.title_todo|as_crispy_field }}
-        {{ form.description_todo|as_crispy_field }}
-        <br/>
-        <button class="btn btn-primary" type="submit">Save</button>
-    </form>
-    
+<section>
+    <div class="container text-center">
+        {% for data in project %}
+        <h1 class="mt-2">Create New Todo for "{{ data.title_project }}"</h1>
+        {% endfor %}
+    </div>
+</section>
 
+<section>
+    <div class="container">
+        <form action="" method="post" class="fw-bold">
+            {% csrf_token %}
+            {{ form.title_todo|as_crispy_field }}
+            {{ form.description_todo|as_crispy_field }}
+            <br/>
+            <button class="btn btn-dark" type="submit">Save</button>
+        </form>
+    </div>
+</section>
 
 {% endblock content %}

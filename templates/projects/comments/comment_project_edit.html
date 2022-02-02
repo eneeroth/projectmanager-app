@@ -3,14 +3,21 @@
 {% block title %}Edit Comment{% endblock title %}
 
 {% block content %}
-<h1>Edit a Comment</h1>
+<section>
+    <div class="container text-center">
+        <h1 class="mt-2">Edit Comment</h1>
+    </div>
+</section>
 
-<form method="post" action="" class="fw-bold">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <br/>
-    <button class="btn btn-primary" type="submit">Post Comment</button>
-</form> 
-<br/>
+<section>
+    <div class="container">
+        <form method="post" action="" class="fw-bold">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <br/>
+            <button class="btn btn-dark" type="submit">Post Comment</button>
+        </form> 
+    </div>
+</section>
 
 {% endblock content %}

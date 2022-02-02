@@ -2,35 +2,49 @@
 {% block title %}Dashboard{% endblock title %}
 
 {% block content %}
-<h1>Dashboard</h1>
-<p>All your active projects.</p>
-<hr>
-
-{% for project in projects %}
-<div class="card">
-    <div class="card-header">
-        {{ project.date_created_project }} | {{ project.creator_project.first_name }}
-        {{ project.creator_project.last_name }}
-        {% if user in project.members.all and user in project.admin.all %} | <strong>Admin,
-            Member</strong>{% elif user in project.members.all %} | <strong>Member</strong>
-        {% elif user in project.admin.all %} | <strong>Admin</strong>{% endif %}
+<section class="bg-dark text-light p-4 text-center ">
+    <div class="container">
+        <div class="d-sm-flex align-items-center justify-content-center">
+            <div class="">
+                <h1 class="text-warning">Dashboard</h1>
+                <p class="lead">
+                    All your active projects.
+                </p>
+            </div>
+        </div>
     </div>
-    <div class="card-body">
-        <h5 class="card-title">{{ project.title_project }}</h5>
-        <div class="row">
-            <div class="col-3 text-truncate">
-                <p class="card-text">{{ project.description_project }}</p>
+</section>
+
+<section class="bg-light">
+    <div class="container">
+        {% for project in projects %}
+        <div class="card mt-4">
+            <div class="card-header">
+                {{ project.date_created_project }} | {{ project.creator_project.first_name }}
+                {{ project.creator_project.last_name }}
+                {% if user in project.members.all and user in project.admin.all %} | <strong>Admin,
+                    Member</strong>{% elif user in project.members.all %} | <strong>Member</strong>
+                {% elif user in project.admin.all %} | <strong>Admin</strong>{% endif %}
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ project.title_project }}</h5>
+                <div class="row">
+                    <div class="col-3 text-truncate">
+                        <p class="card-text">{{ project.description_project }}</p>
+                    </div>
+                </div>
+                <br />
+                <a href="{% url 'project_detail' project.pk %}" class="btn btn-dark">Detail View</a>
             </div>
         </div>
         <br />
-        <a href="{% url 'project_detail' project.pk %}" class="btn btn-primary">Detail View</a>
+        {% empty %}
+        <h2 class="pt-2">You have no active projects at the moment</h2>
+        <a href="{% url 'project_create' %}" class="btn btn-dark mt-2 mb-2">Start a Project Here</a>
     </div>
-</div>
-<br />
-{% empty %}
-<p>No active projects.</p>
-<a href="{% url 'project_create' %}" class="btn btn-primary">Create a Project Here</a>
-<hr>
+</section>
+
+
 
 {% endfor %}
 {% endblock content %}

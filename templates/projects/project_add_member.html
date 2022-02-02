@@ -3,17 +3,23 @@
 {% block title %}Members{% endblock title %}
 
 {% block content %}
-<br/>
-<h1>Members</h1>
-<hr/>
-
-<form method="post" action="" class="fw-bold">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <br/>
-    <button class="btn btn-primary" type="submit">Update Members</button>
-</form> 
-<br/>
-<hr/>
+<section>
+    <div class="container">
+        <div class="mt-2 text-center">
+            <h1>Members</h1>
+        </div>
+    </div>
+</section>
+<hr>
+<section>
+    <div class="container">
+        <form method="post" action="" class="fw-bold mt-2">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <br/>
+            <button class="btn btn-dark" type="submit">Update Members</button>
+        </form>     
+    </div>
+</section>
 
 {% endblock content %}

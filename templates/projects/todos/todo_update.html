@@ -3,42 +3,46 @@
 {% block title %}Update Todo{% endblock title %}
 
 {% block content %}
-<br/>
-<center>
-<h1>{{ todo.project }}</h1>
-<hr>
-<br/>
-</center>
-<div class="row">
-    <div class="col-sm">
-        <div class="card" style="width: 40rem;">
-            <div class="card-body">
-            <h5 class="card-title">{{ todo.title_todo }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">By: {{ todo.creator_todo }} | {{ todo.date_created_todo }}</h6>
-            <p class="card-text">{{ todo.description_todo }}</p>
+<section>
+    <div class="container text-center">
+        <h1 class="mt-2 mb-3">{{ todo.project }}</h1>
+    </div>
+</section>
 
-            <a href="{% url 'project_detail' todo.project.pk %}" class="card-link">Back to project</a>
-            </div>
-        </div>
-        </div>
-        
-    <div class="col-sm">
-    <form action="" method="post" class="fw-bold">
-        {% csrf_token %}
+<section>
+    <div class="container">
         <div class="row">
-            <div class="col-6">
-                {{ form.state_todo|as_crispy_field }}
+            <div class="col-sm">
+                <div class="card mt-2" style="width: 40rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ todo.title_todo }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">By: {{ todo.creator_todo }} |
+                            {{ todo.date_created_todo }}</h6>
+                        <p class="card-text">{{ todo.description_todo }}</p>
+
+                        <a href="{% url 'project_detail' todo.project.pk %}" class="card-link">Back to project</a>
+                    </div>
+                </div>
             </div>
-            <div class="col-6">
-                {{ form.title_todo|as_crispy_field }}
+
+            <div class="col-sm">
+                <form action="" method="post" class="fw-bold">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-6">
+                            {{ form.state_todo|as_crispy_field }}
+                        </div>
+                        <div class="col-6">
+                            {{ form.title_todo|as_crispy_field }}
+                        </div>
+                    </div>
+                    {{ form.description_todo|as_crispy_field }}
+                    <br />
+                    <button class="btn btn-dark" type="submit">Update</button>
+                </form>
+                <br />
             </div>
         </div>
-        {{ form.description_todo|as_crispy_field }}
-        <br/>
-        <button class="btn btn-primary" type="submit">Update</button>
-    </form>
-    <br/>
-</div>
-
+</section>
 
 {% endblock content %}

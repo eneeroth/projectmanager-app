@@ -3,15 +3,20 @@
 {% block title %}Update{% endblock title %}
 
 {% block content %}
-<br/>
-<h1>Create New Project</h1>
+<section>
+    <div class="container text-center">
+        <h1 class="mt-2">Update Project</h1>
+    </div>
+</section>
 
-<form method="post" action="" class="fw-bold">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <br/>
-    <button class="btn btn-primary" type="submit">Update Project</button>
-</form> 
-<br/>
-
+<section>
+    <div class="container">
+        <form method="post" action="" class="fw-bold mt-2">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <br/>
+            <button class="btn btn-dark" type="submit">Update Project</button>
+        </form> 
+    </div>
+</section>
 {% endblock content %}
