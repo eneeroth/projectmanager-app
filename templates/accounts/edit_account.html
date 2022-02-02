@@ -7,9 +7,12 @@
 
 <section>
   <div class="container">
-    <div class="fw-bold mt-2">
+    <!-- Disable password change if 'testuser'-->
+    {% if user.username != 'testuser' %}
+        <div class="fw-bold mt-2">
       <a href="{% url 'password_change' %}">Change Password</a>
     </div>
+    {% endif %}
     <center>
 
       <form action="" method="post" enctype="multipart/form-data">
@@ -17,9 +20,17 @@
 
         <div class="row text-start fw-bold">
           {{form.profile_pic|as_crispy_field}}
+          <!-- Disable username if 'testuser'-->
+          {% if user.username == 'testuser' %}
+          <div class="col">
+            <label for="exampleFormControlInput1" class="form-label">Username</label>
+            <input class="form-control" type="text" placeholder="Disabled input" aria-label="Disabled input example" disabled>
+          </div>
+          {% else %}
           <div class="col mt-2">
             {{form.username|as_crispy_field}}
           </div>
+          {% endif %}
           <div class="col mt-2">
             {{form.email|as_crispy_field}}
           </div>
