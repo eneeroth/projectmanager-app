@@ -13,7 +13,7 @@ class Project(models.Model):
     """
     title_project = models.CharField(max_length=50)
     description_project = models.TextField()
-    creator_project = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    creator_project = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
     date_created_project = models.DateTimeField(auto_now_add=True)
     members = models.ManyToManyField(get_user_model(), related_name='members')
     admin = models.ManyToManyField(get_user_model(), related_name='admin')
